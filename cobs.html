@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ 
+<script>
+
+ 
+$.ajax({
+    url         : "https://makanbang.000webhostapp.com/timeline.php",
+    type        : "GET",
+    dataType    : "json",
+    data        : {get_param : 'value'},
+	beforeSend:function(){$(".spinner").css("display","block");},
+    success     : function(data){
+        //menghitung jumlah data
+        jmlData = data.length;
+        
+        //variabel untuk menampung tabel yang akan digenerasikan
+        buatTabel = "";
+        
+        //perulangan untuk menayangkan data dalam tabel
+        for(a = 0; a < jmlData; a++){
+            
+            //mencetak baris baru
+            buatTabel += "<tr>"
+            
+                        //membuat penomoran
+                        + "<td>" + (a+1) + "</td>"
+                        //mencetak field nama user
+                        + "<td>" + data[a]["user_tl"] + "</td>"
+                        //mencetak judul timeline
+                        + "<td>" + data[a]["jdl_tl"] + "</td>"
+                        //mencetak keterangan
+                        + "<td>" + data[a]["ket_tl"] + "</td>"
+                        //mencetak gambar
+                        + "<td><img src='" + data[a]["img_tl"] + "'/></td>"
+            //tutup baris baru
+                + "<tr/>";
+        }
+        //menayangkan jumlah data
+        document.getElementById('konten').innerHTML += jmlData;
+		
+		
+        //mencetak ke tabel
+        document.getElementsByTagName("table")[0].innerHTML += buatTabel;
+		
+    }
+});
+</script>
+
+<style type="text/css">
+.spinner {
+    position: ;
+    margin-left: 0px; 
+    margin-right: 0px;
+    text-align:center;
+    overflow: auto;
+    padding: 10px 10px 10px 10px;
+}
+#img-spinner{
+ width: 45px;
+ height: 45px;
+}
+</style>
+</head>
+
+<body>	
+
+<div id="konten">Jumlah Data : </div>
+		<table>
+            <tr>
+                <th rowspan="2">Nomor</th><th rowspan="2">Nama User</th><th colspan="3">Isi Data</th>
+            </tr>
+            <tr>
+                <th>Judul</th><th>Keterangan</th><th>Foto</th>
+            </tr>
+        </table>
+</body>
+</html>
